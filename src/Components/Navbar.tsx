@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 
 const Navbar:React.FC  = () => {
   
@@ -10,6 +9,9 @@ const Navbar:React.FC  = () => {
         <div className='h-[100%] flex w-full me-[17vh] justify-center relative '>
             <input className=' h-[70%] w-[40vh]  rounded-2xl p-4 outline-none border-none mt-2  ' type="search" placeholder='Search ...'  />
             <input className=' bg-white  p-2 border-l-2 shadow-2xl rounded-2xl absolute top-2 left-[105vh]' type="submit" />
+        </div>
+        <div>
+          
         </div>
     </div>
   )

@@ -4,7 +4,8 @@
 
 @layer base{
   html{
-    @apply bg-stone-950
+   
+    @apply bg-stone-950   
   }
   h1{
     @apply text-white

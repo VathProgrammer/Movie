@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface typeofData {
@@ -13,6 +14,7 @@ interface typeofData {
   length: string;
   pro: string;
   production_companies: string;
+  videos: string;
 }
 
 const Detail = () => {
@@ -34,7 +36,10 @@ const Detail = () => {
   const image_url = "https://image.tmdb.org/t/p/w500";
 
   const Displayvdo = () => {
-    const TrailerKey = Singlemovies.videos.results.find((video) => video.name === "Official Trailer" || video.type === "Trailer" );
+    const TrailerKey = Singlemovies.videos.results.find(
+      (video: string) =>
+        video.name === "Official Trailer" || video.type === "Trailer"
+    );
 
     setTrailer(TrailerKey.key);
     setdisTrailer(!disTrialer);
@@ -47,11 +52,20 @@ const Detail = () => {
         </div>
       ) : (
         <div>
-          <img
-            className=" object-cover h-screen blur-sm w-full  -z-10 fixed"
-            src={image_url + Singlemovies.backdrop_path}
-            alt=""
-          />
+          <AnimatePresence>
+            <motion.div
+              layout
+              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 50 }}
+              exit={{ opacity: 0, x: 0 }}
+            >
+              <img
+                className=" object-cover h-screen blur-sm w-full  -z-10 fixed"
+                src={image_url + Singlemovies.backdrop_path}
+                alt=""
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className="w-[70%] mx-auto">
             <div className=" flex justify-between">
               <div className=" mt-20">
@@ -66,23 +80,23 @@ const Detail = () => {
                 >
                   {disTrialer ? "Close Traler" : "Play Trailer"}
                 </button>
-                {
-                  disTrialer && (
-                    <iframe
+                {disTrialer && (
+                  <iframe
                     src={`https://www.youtube.com/embed/${trailer}`}
                     allowFullScreen
-                    width={420} height={315}
-                  className=" w-72 h-52 mt-2 rounded-lg"
+                    width={420}
+                    height={315}
+                    className=" w-72 h-52 mt-2 rounded-lg"
                   ></iframe>
-                  )
-
-                }
-              
+                )}
               </div>
               <div className=" h-screen w-[50vw] right-0 backdrop-blur-xl fixed  p-10 flex flex-col overflow-hidden">
-                <h1 className=" text-3xl font-bold mt-10 tracking-wide  leading-10">
-                  {Singlemovies.title}
-                </h1>
+                <motion.div layout>
+                  <h1 className=" text-3xl font-bold  tracking-wide  leading-10">
+                    {Singlemovies.title}
+                  </h1>
+                </motion.div>
+
                 <p className=" leading-8">
                   Release Date: {Singlemovies.release_date}
                 </p>
@@ -91,17 +105,19 @@ const Detail = () => {
                 </p>
                 <p>Runtime: {Singlemovies.runtime} minutes</p>
                 <hr className="mt-9" />
-                <p className=" mt-4 text-2xl truncate hover:text-clip">{Singlemovies.overview}</p>
+                <p className=" mt-4 text-2xl truncate hover:text-clip">
+                  {Singlemovies.overview}
+                </p>
                 <hr className="mt-7" />
 
-                {Singlemovies.genres?.map((gen) => {
+                {Singlemovies.genres?.map((gen: string) => {
                   return (
                     <p className=" leading-7" key={gen.id}>
                       {gen.name}
                     </p>
                   );
                 })}
-                {Singlemovies.production_companies?.map((pro) => {
+                {Singlemovies.production_companies?.map((pro: string) => {
                   return (
                     <p className=" leading-10" key={pro.id}>
                       {pro.name}
